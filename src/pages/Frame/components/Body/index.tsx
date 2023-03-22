@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import LinkButton from "@/components/LinkButton"
-import Logo from "@/components/Frame/components/Logo"
+import Logo from "@/pages/Frame/components/Logo"
 import H1 from "@/components/H1"
 import colors from "@/styles/colors"
 

@@ -1,4 +1,4 @@
-import Frame from "../components/Frame"
+import Frame from "../pages/Frame"
 import './globals.css'
 
 
