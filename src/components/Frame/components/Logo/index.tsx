@@ -3,7 +3,7 @@ import Link from "next/link"
 import styled from "styled-components"
 import logoUrl from "./logo_url"
 
-const Root = styled.link<{isHome: boolean}>`
+const Root = styled(Link)<{isHome: boolean}>`
     width : 77px;
     height : 17px;
     background-image: ${(props) => props.isHome ? `url(${logoUrl.home})` : `url(${logoUrl.default})`};
