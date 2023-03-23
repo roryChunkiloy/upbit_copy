@@ -1,3 +1,4 @@
+import StyledComponentsRegistry from "@/lib/registry"
 import Frame from "../pages/Frame"
 import './globals.css'
 
@@ -15,8 +16,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-          <Frame/>
-          {children}
+        <StyledComponentsRegistry>
+          <div>
+            <Frame/>
+            {children}
+          </div>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )
