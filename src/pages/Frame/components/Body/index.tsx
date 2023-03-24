@@ -1,3 +1,4 @@
+'use client'
 import styled from "styled-components"
 import LinkButton from "@/components/LinkButton"
 import Logo from "@/pages/Frame/components/Logo"
@@ -95,7 +96,6 @@ const FrameNavigationItems = [
 const FrameBody = ({
     pathName
 }: FrameProps) => {
-    console.log(pathName)
     return (
         <Root isHome={pathName === '/'}>
             <H1>
