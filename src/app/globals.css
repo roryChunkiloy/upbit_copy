@@ -15,6 +15,12 @@ button {
     border: 0;
     background: transparent;
     cursor: pointer;
+
+
+}
+
+.background {
+  background-color: #f4f5f8;
 }
 
 ol, ul {list-style:none; padding: 0}

@@ -7,7 +7,12 @@ import styled from "styled-components";
 import getQueryString from "@/utils/getQueryString";
 import CoinListTable, { CoinInfo } from "./components/CoinListTable";
 
-const CoinList = [
+
+const CoinList: {
+    kr_name: string,
+    en_name: string,
+    ticker: string,
+}[] = [
     {
         kr_name: '비트코인',
         en_name: 'Bitcoin',
@@ -22,7 +27,13 @@ const CoinList = [
         kr_name: '솔라나',
         en_name: 'Solana',
         ticker: 'SOL',
-    }
+    },
+    {
+        kr_name: '리플',
+        en_name: 'Ripple',
+        ticker: 'XRP',
+    },
+    // 형식에 맞게 여기 추가하면 코인 리스트에 추가됩니다.
 ]
 
 const ExchangePage = () => {
@@ -38,7 +49,7 @@ const ExchangePage = () => {
                 change: '',
                 change_rate: 0,
                 change_price: 0,
-                acc_trade_price: 0,
+                acc_trade_price_24h: 0,
             }
             return coinInfo
         })
@@ -46,34 +57,34 @@ const ExchangePage = () => {
     const [selected, setSelected] = useState(CoinList[0])
     const totalCoins = CoinList.map((item) => `KRW-${item.ticker}`)
 
-    // useEffect(() => {
-    //     const webSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
-    //     webSocket.binaryType = 'arraybuffer';
-    //     webSocket.onopen = () => {
-    //       const str = [{"ticket":"test"},{"type":"ticker","codes":totalCoins}]
-    //       webSocket.send(JSON.stringify(str))
-    //     }
+    useEffect(() => {
+        const webSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
+        webSocket.binaryType = 'arraybuffer';
+        webSocket.onopen = () => {
+          const str = [{"ticket":"test"},{"type":"ticker","codes":totalCoins}]
+          webSocket.send(JSON.stringify(str))
+        }
     
-    //     webSocket.onmessage = (evt) => {
-    //         let enc = new TextDecoder("utf-8");
-    //         let arr = new Uint8Array(evt.data);
-    //         let data: CoinInfo = JSON.parse(enc.decode(arr));
-    //         const coinInfoListCopy = coinInfoList.slice()
-    //         coinInfoListCopy.map((item) => {
-    //             if (item.code === data.code) {
-    //                 item.trade_price = data.trade_price;
-    //                 item.change = data.change;
-    //                 item.acc_trade_price = data.acc_trade_price;
-    //                 item.change_price = data.change_price;
-    //                 item.change_rate = data.change_rate;
-    //             }
-    //         })
-    //         setCoinInfoList(coinInfoList.slice())
-    //     }
-    //     return () => {
-    //       webSocket.close()
-    //     }
-    // }, [])
+        webSocket.onmessage = (evt) => {
+            let enc = new TextDecoder("utf-8");
+            let arr = new Uint8Array(evt.data);
+            let data: CoinInfo = JSON.parse(enc.decode(arr));
+            const coinInfoListCopy = coinInfoList.slice()
+            coinInfoListCopy.map((item) => {
+                if (item.code === data.code) {
+                    item.trade_price = data.trade_price;
+                    item.change = data.change;
+                    item.acc_trade_price_24h = data.acc_trade_price_24h;
+                    item.change_price = data.change_price;
+                    item.change_rate = data.change_rate;
+                }
+            })
+            setCoinInfoList(coinInfoList.slice())
+        }
+        return () => {
+          webSocket.close()
+        }
+    }, [])
 
     
     return (

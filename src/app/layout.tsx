@@ -1,7 +1,8 @@
 import StyledComponentsRegistry from "@/lib/registry"
 import Frame from "../pages/Frame"
 import './globals.css'
-
+import styled from "styled-components"
+import colors from "@/styles/colors"
 
 export const metadata = {
   title: '업비트 - 가장 신뢰받는 디지털 자산 거래소',
@@ -17,7 +18,7 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         <StyledComponentsRegistry>
-          <div>
+          <div className="background">
             <Frame/>
             {children}
           </div>
