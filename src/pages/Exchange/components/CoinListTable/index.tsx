@@ -22,6 +22,8 @@ type CoinListTableType = {
 const Root = styled.div`
     width: 400px;
     background-color: #fff;
+    position: relative;
+    top: 10px;
 `
 const Table = styled.table`
     width: 100%;

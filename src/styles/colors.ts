@@ -5,6 +5,7 @@ const colors = {
     down_color: '#1261c4',
     home_font_color: '#333',
     home_bg_color: '#f4f5f8',
+    base_bg_color: '#aaadb5',
     table_head_font_color: '#666',
     table_head_bg_color: '#f9fafc',
     table_body_font_color: '#333',

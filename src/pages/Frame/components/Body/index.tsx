@@ -53,6 +53,7 @@ const NavigationItem = styled.li`
 `
 
 const FrameLinkButton = styled(LinkButton)`
+    display: flex;
 `
 const FrameNavigationItems = [
     {
