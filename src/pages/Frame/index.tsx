@@ -5,7 +5,7 @@ import FrameBody from "./components/Body"
 const Frame = () => {
     const pahtName = usePathname()
     return (
-        <FrameBody pathName={pahtName}/>
+        <FrameBody pathName={pahtName as string}/>
     )
 }
 

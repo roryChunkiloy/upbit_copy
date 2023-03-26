@@ -13,17 +13,21 @@ type CoinInfo = {
     change_rate: number;
     change_price: number;
     acc_trade_price_24h: number;
+    current: boolean;
+    acc_trade_volume_24h: number;
+    high_price: number;
+    low_price: number;
 }
 
 type CoinListTableType = {
-    coinInfoList: CoinInfo[]
+    coinInfoList: CoinInfo[],
+    setCoin: any
 }
 
 const Root = styled.div`
     width: 400px;
     background-color: #fff;
     position: relative;
-    top: 10px;
 `
 const Table = styled.table`
     width: 100%;
@@ -40,7 +44,7 @@ const THead = styled.thead`
     background-color: ${colors.table_head_bg_color};
 `
 
-const TH = styled.th`
+const TH = styled.th<{width: number}>`
 
 `
 const TBody = styled.tbody`
@@ -48,11 +52,14 @@ const TBody = styled.tbody`
     color: ${colors.table_body_font_color};
 `
 
-const TR = styled.tr`
+const TR = styled.tr<{current: boolean}>`
     height: 45px;
 
     cursor: pointer;
     padding : 0;
+
+    border-top: 1px solid #d0d3db;
+    background-color: ${(props) => props.current && colors.table_body_hover_color}; 
 
     &:hover{
         background-color: ${colors.table_body_hover_color};
@@ -61,7 +68,7 @@ const TR = styled.tr`
 const TD = styled.td`
     position: relative;
 `
-const TDContainer = styled.div<{col: number, change?: 'FALL' | 'RISE'}>`
+const TDContainer = styled.div<{col: number, change?: string}>`
     display: inline-flex;
     flex-direction: column;
 
@@ -93,10 +100,12 @@ const TableHeadData = [
 ]
 
 const CoinListTable = ({
-    coinInfoList
+    coinInfoList,
+    setCoin
 }: CoinListTableType) => {
     const tableRowClick = (e: React.MouseEvent) => {
         const code = (e.currentTarget as HTMLElement).dataset.code;
+        setCoin(code as string)
         replaceQueryString(code as string)
     }
 
@@ -111,14 +120,13 @@ const CoinListTable = ({
                                 <TH width={item.width}>{item.content}</TH>
                             )
                         })
-                    }
-                
+                    }      
                 </THead>
                 <TBody>
                         {
                             coinInfoList.map((item, idx) => {
                                 return (
-                                    <TR data-code={item.code.split('-')[1]} onClick={tableRowClick}>
+                                    <TR data-code={item.code.split('-')[1]} onClick={tableRowClick} current={item.current}>
                                         <TD>
                                             <TDContainer col={1}>
                                                 <div>
@@ -134,14 +142,14 @@ const CoinListTable = ({
                                             </TDContainer>
                                         </TD>
                                         <TD>
-                                            <TDContainer col={2}>
+                                            <TDContainer col={2} change={item.change}>
                                                 <strong>
                                                     {item.trade_price.toLocaleString()}
                                                 </strong>
                                             </TDContainer>
                                         </TD>
                                         <TD>
-                                            <TDContainer col={3}>
+                                            <TDContainer col={3} change={item.change}>
                                                 <div>
                                                     <strong>
                                                         {(item.change === 'RISE' ? '+' : '-') +(item.change_rate*100).toFixed(2)+'%'}

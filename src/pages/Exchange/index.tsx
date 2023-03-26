@@ -1,11 +1,11 @@
 'use client'
-import getSnapCoinChartData from "@/services/getSnapCoinChartData"
 import { useEffect, useState } from "react";
 import {Helmet} from "react-helmet";
-import { useRouter } from "next/router"
-import styled from "styled-components";
-import getQueryString from "@/utils/getQueryString";
 import CoinListTable, { CoinInfo } from "./components/CoinListTable";
+import replaceQueryString from "@/utils/replaceQueryString";
+import CoinInformationBox from "./components/CoinInformationBox";
+import styled from "styled-components";
+import { it } from "node:test";
 
 
 const CoinList: {
@@ -36,6 +36,13 @@ const CoinList: {
     // 형식에 맞게 여기 추가하면 코인 리스트에 추가됩니다.
 ]
 
+const ExchangePageSection = styled.section`
+    display: flex;
+    justify-content: space-around;
+    padding-top:10px;
+
+`
+
 const ExchangePage = () => {
     const location = window.location
     const history = window.history
@@ -50,14 +57,39 @@ const ExchangePage = () => {
                 change_rate: 0,
                 change_price: 0,
                 acc_trade_price_24h: 0,
+                current: false,
+                acc_trade_volume_24h: 0,
+                high_price: 0,
+                low_price: 0,
             }
             return coinInfo
         })
     )
-    const [selected, setSelected] = useState(CoinList[0])
     const totalCoins = CoinList.map((item) => `KRW-${item.ticker}`)
-
+    const [currentCoin, setCurrentCoin] = useState(location.search === '' ? 'BTC' : location.search.substring(1))
+    const [currentCoinInfo, setCurrentCoinInfo] = useState({
+        kr_name: '',
+        en_name: '',
+        code: ``,
+        trade_price: 0,
+        change: '',
+        change_price: 0,
+        change_rate: 0,
+        high_price: 0,
+        low_price: 0,
+        acc_trade_volume_24h: 0,
+        acc_trade_price_24h: 0,
+    })
+    const [currentCoinPrice, setCurrentCoinPrice] = useState(0);
+    
     useEffect(() => {
+        console.log(location.search==='')
+        if (location.search === '') {
+            setTimeout(()=> {
+                replaceQueryString('BTC')
+            })
+        }
+
         const webSocket = new WebSocket('wss://api.upbit.com/websocket/v1');
         webSocket.binaryType = 'arraybuffer';
         webSocket.onopen = () => {
@@ -77,23 +109,46 @@ const ExchangePage = () => {
                     item.acc_trade_price_24h = data.acc_trade_price_24h;
                     item.change_price = data.change_price;
                     item.change_rate = data.change_rate;
+
+                    if (item.code.split('-')[1] === currentCoin) {
+                        item.current = true
+                        setCurrentCoinInfo({
+                            kr_name: item.kr_name,
+                            en_name: item.en_name,
+                            code: item.code,
+                            change: item.change,
+                            change_price: item.change_price,
+                            change_rate: item.change_rate,
+                            trade_price: item.trade_price,
+                            acc_trade_price_24h: item.acc_trade_price_24h,
+                            acc_trade_volume_24h: data.acc_trade_volume_24h,
+                            high_price: data.high_price,
+                            low_price: data.low_price,
+                        })
+                    } else item.current = false
                 }
             })
             setCoinInfoList(coinInfoList.slice())
+            // 소켓을 두개 사용하는 방법도 가능하고, 더 좋은 방법에 대한 고민 필요...
+            if (data.code.split('-')[1] === currentCoin) {
+                setCurrentCoinPrice(data.trade_price)
+
+            }
         }
         return () => {
           webSocket.close()
         }
-    }, [])
-
-    
+    }, [currentCoin])
     return (
         <>
             <Helmet>
-                <title> 니냐니냐뇨 </title>
+                <title>{currentCoinPrice.toLocaleString()+' '+currentCoin}</title>
             </Helmet>
 
-            <CoinListTable coinInfoList={coinInfoList}/>
+            <ExchangePageSection>
+                <CoinInformationBox currentCoin={currentCoin} currentCoinInfo={currentCoinInfo}/>
+                <CoinListTable coinInfoList={coinInfoList} setCoin={setCurrentCoin}/>
+            </ExchangePageSection>
         </>
     )
 }
