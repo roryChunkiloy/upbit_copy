@@ -135,7 +135,7 @@ const ChangedPrice = styled.span<{change: string}>`
 }
 `
 
-const TotalInfo = styled.div`
+const ExtraInfo = styled.div`
   width : 400px; 
   height : 80px;
   position : relative;
@@ -148,7 +148,7 @@ const TotalInfo = styled.div`
   place-items: center;
 `
 
-const TotalItem = styled.div`
+const ExtraItem = styled.div`
   width : 180px; 
   height : 35px;
   font-size : 12px;
@@ -185,24 +185,24 @@ const CoinInformationBox = ({
                     </ChangedInfoBox>
                 </PriceBox>
 
-                <TotalInfo>
-                    <TotalItem style={{ borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: '#e9ecf1'}}>
+                <ExtraInfo>
+                    <ExtraItem style={{ borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: '#e9ecf1'}}>
                         <div>고가</div>
                         <div style={{color : '#c84a31', fontSize : 14, fontWeight:600}}>{currentCoinInfo.high_price.toLocaleString()}</div>
-                    </TotalItem>
-                    <TotalItem style={{ borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: '#e9ecf1'}}>
+                    </ExtraItem>
+                    <ExtraItem style={{ borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: '#e9ecf1'}}>
                         <div>거래량(24H)</div>
                         <div style={{fontSize : 14, fontWeight:400}}>{currentCoinInfo.acc_trade_volume_24h.toLocaleString()}</div>
-                    </TotalItem>
-                    <TotalItem>
+                    </ExtraItem>
+                    <ExtraItem>
                         <div>저가</div>
                         <div style={{color : '#1261c4', fontSize : 14, fontWeight:600}}>{currentCoinInfo.low_price.toLocaleString()}</div>
-                    </TotalItem>
-                    <TotalItem>
+                    </ExtraItem>
+                    <ExtraItem>
                         <div>거래대금(24H)</div>
                         <div style={{fontSize : 12, fontWeight:400}}>{Math.floor(currentCoinInfo.acc_trade_price_24h).toLocaleString()}</div>
-                    </TotalItem>
-                </TotalInfo>
+                    </ExtraItem>
+                </ExtraInfo>
             </CurrentCoinInfoBox>
         </Root>
     )
