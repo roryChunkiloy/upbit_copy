@@ -37,12 +37,12 @@ const CoinList: {
 ]
 
 const ExchangePageSection = styled.section`
+    width: 1430px;
     display: flex;
     justify-content: space-around;
     padding-top:10px;
 
 `
-
 const ExchangePage = () => {
     const location = window.location
     const history = window.history
@@ -83,7 +83,6 @@ const ExchangePage = () => {
     const [currentCoinPrice, setCurrentCoinPrice] = useState(0);
     
     useEffect(() => {
-        console.log(location.search==='')
         if (location.search === '') {
             setTimeout(()=> {
                 replaceQueryString('BTC')

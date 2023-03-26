@@ -1,4 +1,8 @@
+import CandleChart from "@/components/CandleChart"
+import getSnapCoinChartData, { CoinChartData } from "@/services/getSnapCoinChartData"
 import colors from "@/styles/colors"
+import replaceQueryString from "@/utils/replaceQueryString"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 
 type coinInfomationType = {
@@ -134,7 +138,7 @@ const ChangedPrice = styled.span<{change: string}>`
   content : '${props => props.change === 'FALL' ? '▼' : '▲'}'
 }
 `
-
+// ExtraInfo 부분 선언적으로 개선할 여지 있음
 const ExtraInfo = styled.div`
   width : 400px; 
   height : 80px;
@@ -159,13 +163,57 @@ const ExtraItem = styled.div`
   display : flex;
   justify-content: space-between;
 `
+const ChartBox = styled.div`
+    height: 500px;
+    background-color: #fff;
+`
+
+const SortSelectBox = styled.div`
+  width : 100%;
+  height : 40px;
+  background : #efefef;
+  border-top : 1px solid #d4d6dc;
+  border-bottom : 1px solid #d4d6dc;
+`
+
+const SortOptionContainer = styled.div`
+  width : 300px;
+  height: 100%;
+  display : flex;
+  align-items : center;
+`
+
+const Selector = styled.input`
+  width : 15px;
+  height : 15px;
+  margin-left :20px;
+  margin-right : 5px;
+`
+
 
 const CoinInformationBox = ({
     currentCoin,
     currentCoinInfo
 }: coinInfomationType) => {
     const imgUrl = `https://static.upbit.com/logos/${currentCoin}.png`
-    return(
+    const [chartSort, setChartSort] = useState('days')
+    const [candleData, setCandleData] = useState<CoinChartData[]>([])
+
+    const chartSortSelect = (e: React.MouseEvent) => {
+      setChartSort((e.currentTarget as HTMLInputElement).value)
+    }
+
+    useEffect(() => {
+      const data = getSnapCoinChartData({
+        chartSort: chartSort,
+        coin: currentCoin
+      })
+
+      data.then(res => setCandleData(res))
+
+    }, [currentCoin, chartSort])
+
+    return (
         <Root>
             <CoinNameBox>
                 <NameBox>
@@ -184,11 +232,10 @@ const CoinInformationBox = ({
                         <ChangedPrice change={currentCoinInfo.change}>{Math.floor(currentCoinInfo.change_price).toLocaleString()} </ChangedPrice>
                     </ChangedInfoBox>
                 </PriceBox>
-
                 <ExtraInfo>
                     <ExtraItem style={{ borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: '#e9ecf1'}}>
                         <div>고가</div>
-                        <div style={{color : '#c84a31', fontSize : 14, fontWeight:600}}>{currentCoinInfo.high_price.toLocaleString()}</div>
+                        <div style={{color : `${colors.up_color}`, fontSize : 14, fontWeight:600}}>{currentCoinInfo.high_price.toLocaleString()}</div>
                     </ExtraItem>
                     <ExtraItem style={{ borderBottomWidth: 1, borderBottomStyle: 'solid', borderBottomColor: '#e9ecf1'}}>
                         <div>거래량(24H)</div>
@@ -196,7 +243,7 @@ const CoinInformationBox = ({
                     </ExtraItem>
                     <ExtraItem>
                         <div>저가</div>
-                        <div style={{color : '#1261c4', fontSize : 14, fontWeight:600}}>{currentCoinInfo.low_price.toLocaleString()}</div>
+                        <div style={{color : `${colors.down_color}`, fontSize : 14, fontWeight:600}}>{currentCoinInfo.low_price.toLocaleString()}</div>
                     </ExtraItem>
                     <ExtraItem>
                         <div>거래대금(24H)</div>
@@ -204,6 +251,19 @@ const CoinInformationBox = ({
                     </ExtraItem>
                 </ExtraInfo>
             </CurrentCoinInfoBox>
+            <ChartBox>
+              <SortSelectBox>
+                <SortOptionContainer>
+                  <Selector onClick={chartSortSelect} type={'radio'} name={'chart'} id={'hour'} value={'minutes/60'} defaultChecked></Selector>
+                  <label htmlFor="hour">hour</label>
+                  <Selector onClick={chartSortSelect} type={'radio'} name={'chart'} id={'day'} value={'days'}></Selector>
+                  <label htmlFor="day">day</label>
+                  <Selector onClick={chartSortSelect} type={'radio'} name={'chart'} id={'week'} value={'weeks'}></Selector>
+                  <label htmlFor="week">week</label>
+                </SortOptionContainer>
+              </SortSelectBox>
+              <CandleChart data={candleData}></CandleChart>
+            </ChartBox>
         </Root>
     )
 

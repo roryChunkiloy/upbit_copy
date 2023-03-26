@@ -19,6 +19,7 @@ button {
 
 .background {
   background-color: #d0d3db;
+  height: 1000px;
 }
 
 ol, ul {list-style:none; padding: 0}

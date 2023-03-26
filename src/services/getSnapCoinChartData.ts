@@ -1,6 +1,6 @@
 import axios from "axios"
 
-interface upbitChartData {
+interface UpbitChartData {
     candle_acc_trade_price : number,
     candle_acc_trade_volume : number,
     candle_date_time_kst : string,
@@ -14,19 +14,19 @@ interface upbitChartData {
     unit? : number
 }
 
-type getSnapCoinChartDataProps = {
+type GetSnapCoinChartDataProps = {
   chartSort: string,
   coin: string,
   periodTo?: number
 }
 
-type coinChartData = {
+type CoinChartData = {
   time : number,
-  open : number,
-  trade : number,
-  high : number,
-  low : number,
-  volume : number,
+  opening_price : number,
+  trade_price : number,
+  high_price : number,
+  low_price : number,
+  candle_acc_trade_volume : number,
   candle_date_time_kst : string,
 }
 
@@ -34,20 +34,20 @@ const getSnapCoinChartData = async ({
   chartSort,
   coin,
   periodTo,
-}: getSnapCoinChartDataProps) => {
+}: GetSnapCoinChartDataProps) => {
   let URL = `https://api.upbit.com/v1/candles/${chartSort}?market=KRW-${coin}&count=200`
   if (periodTo) URL += `&to=${periodTo}`
-  const snapCoinChartData : coinChartData[] = []
+  const snapCoinChartData : CoinChartData[] = []
   await axios.get(URL).then(res => {
-    const data : upbitChartData[] = res.data 
+    const data : UpbitChartData[] = res.data 
     data.map((item, idx) => {
       snapCoinChartData.push({
         time : idx,
-        open : item.opening_price,
-        trade : item.trade_price,
-        high : item.high_price,
-        low : item.low_price,
-        volume : item.candle_acc_trade_volume,
+        opening_price : item.opening_price,
+        trade_price : item.trade_price,
+        high_price : item.high_price,
+        low_price : item.low_price,
+        candle_acc_trade_volume : item.candle_acc_trade_volume,
         candle_date_time_kst : item.candle_date_time_kst,
       })
     })
@@ -59,3 +59,5 @@ const getSnapCoinChartData = async ({
 }
 
 export default getSnapCoinChartData
+
+export type {CoinChartData}
