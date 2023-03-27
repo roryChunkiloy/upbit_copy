@@ -1,3 +1,5 @@
+'use client'
+
 import styled from "styled-components";
 import colors from "@/styles/colors";
 import { it } from "node:test";

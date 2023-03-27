@@ -1,7 +1,11 @@
 'use client'
 import Link from "next/link"
 import styled from "styled-components"
-import logoUrl from "./logo_url"
+
+const logoUrl = {
+    home: "https://cdn.upbit.com/upbit-web/images/logo_upbit.3073489.svg",
+    default: "https://cdn.upbit.com/upbit-web/images/logo_upbit_sub.f7f9753.svg"
+}
 
 const Root = styled(Link)<{isHome: boolean}>`
     width : 77px;

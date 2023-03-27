@@ -1,7 +1,7 @@
 'use client'
 import styled from "styled-components"
 import LinkButton from "@/components/LinkButton"
-import Logo from "@/pages/Frame/components/Logo"
+import Logo from "@/pagesComponents/Frame/components/Logo"
 import H1 from "@/components/H1"
 import colors from "@/styles/colors"
 

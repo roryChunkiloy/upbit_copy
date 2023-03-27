@@ -1,7 +1,8 @@
+'use client'
+
 import CandleChart from "@/components/CandleChart"
 import getSnapCoinChartData, { CoinChartData } from "@/services/getSnapCoinChartData"
 import colors from "@/styles/colors"
-import replaceQueryString from "@/utils/replaceQueryString"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
@@ -190,11 +191,6 @@ const Selector = styled.input`
   margin-right : 5px;
 `
 
-const ChartActionBox = styled.div`
-  
-`
-
-
 const CoinInformationBox = ({
     currentCoin,
     currentCoinInfo
@@ -291,7 +287,6 @@ const CoinInformationBox = ({
             <CoinNameBox>
                 <NameBox>
                     <CoinImg src={imgUrl}/>
-                    <KoreanName>{currentCoinInfo.kr_name}</KoreanName>
                     <Ticker>{currentCoinInfo.code}</Ticker>
                 </NameBox>
             </CoinNameBox>

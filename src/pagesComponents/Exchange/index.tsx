@@ -81,6 +81,10 @@ const CoinList: {
     // 형식에 맞게 여기 추가하면 코인 리스트에 추가됩니다.
 ]
 
+const Root = styled.div`
+    
+`
+
 const ExchangePageSection = styled.section`
     width: 1430px;
     display: flex;
@@ -89,8 +93,6 @@ const ExchangePageSection = styled.section`
 
 `
 const ExchangePage = () => {
-    const location = window.location
-    const history = window.history
     const [coinInfoList, setCoinInfoList] = useState<CoinInfo[]>(
         CoinList.map((item) => {
             const coinInfo = {
@@ -111,7 +113,7 @@ const ExchangePage = () => {
         })
     )
     const totalCoins = CoinList.map((item) => `KRW-${item.ticker}`)
-    const [currentCoin, setCurrentCoin] = useState(location.search === '' ? 'BTC' : location.search.substring(1))
+    const [currentCoin, setCurrentCoin] = useState('BTC')
     const [currentCoinInfo, setCurrentCoinInfo] = useState({
         kr_name: '',
         en_name: '',
@@ -128,6 +130,7 @@ const ExchangePage = () => {
     const [currentCoinPrice, setCurrentCoinPrice] = useState(0);
     
     useEffect(() => {
+        const location = window.location
         if (location.search === '') {
             setTimeout(()=> {
                 replaceQueryString('BTC')
@@ -184,7 +187,7 @@ const ExchangePage = () => {
         }
     }, [currentCoin])
     return (
-        <>
+        <Root>
             <Helmet>
                 <title>{currentCoinPrice.toLocaleString()+' '+currentCoin}</title>
             </Helmet>
@@ -193,7 +196,7 @@ const ExchangePage = () => {
                 <CoinInformationBox currentCoin={currentCoin} currentCoinInfo={currentCoinInfo}/>
                 <CoinListTable coinInfoList={coinInfoList} setCoin={setCurrentCoin}/>
             </ExchangePageSection>
-        </>
+        </Root>
     )
 }
 
