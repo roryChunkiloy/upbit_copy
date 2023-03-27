@@ -117,7 +117,7 @@ const CoinListTable = ({
                     {
                         TableHeadData.map((item, idx) => {
                             return (
-                                <TH width={item.width}>{item.content}</TH>
+                                <TH key={idx} width={item.width}>{item.content}</TH>
                             )
                         })
                     }      
@@ -126,7 +126,7 @@ const CoinListTable = ({
                         {
                             coinInfoList.map((item, idx) => {
                                 return (
-                                    <TR data-code={item.code.split('-')[1]} onClick={tableRowClick} current={item.current}>
+                                    <TR key={idx} data-code={item.code.split('-')[1]} onClick={tableRowClick} current={item.current}>
                                         <TD>
                                             <TDContainer col={1}>
                                                 <div>
