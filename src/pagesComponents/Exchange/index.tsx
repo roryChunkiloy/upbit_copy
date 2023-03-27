@@ -113,7 +113,7 @@ const ExchangePage = () => {
         })
     )
     const totalCoins = CoinList.map((item) => `KRW-${item.ticker}`)
-    const [currentCoin, setCurrentCoin] = useState('BTC')
+    const [currentCoin, setCurrentCoin] = useState(window?.location.search === '' ? 'BTC' : window?.location.search.substring(1))
     const [currentCoinInfo, setCurrentCoinInfo] = useState({
         kr_name: '',
         en_name: '',

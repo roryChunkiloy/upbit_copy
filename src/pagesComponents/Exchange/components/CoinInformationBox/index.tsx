@@ -69,15 +69,6 @@ const Ticker = styled.span`
   top : 2px;
 `
 
-/* const Arrow = styled.div`
-  width :20px;
-  height : 20px;
-  background: url('https://cdn.upbit.com/upbit-web/images/ico_select_1.34dc566.png');
-  background-repeat: no-repeat;
-  position : relative;
-  left : 180px;
-  top : -13px;
-` */
 
 const CurrentCoinInfoBox = styled.div`
   width: 100%;
@@ -287,6 +278,7 @@ const CoinInformationBox = ({
             <CoinNameBox>
                 <NameBox>
                     <CoinImg src={imgUrl}/>
+                    <KoreanName>{currentCoinInfo.kr_name}</KoreanName>
                     <Ticker>{currentCoinInfo.code}</Ticker>
                 </NameBox>
             </CoinNameBox>
