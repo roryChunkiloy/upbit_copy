@@ -238,7 +238,7 @@ const CoinInformationBox = ({
       const containerWidth = 914
       const start = chartDragStartPoint
       const moved = chartDragEndPoint
-      const candleWidth = containerWidth / candleData.length
+      const candleWidth = containerWidth / candleData.length * 3 // 드래그 속도 조절하려고 일단 hack 으로 해결.. enhance 해야함
 
       const movingCount = (start - moved) > 0 ? (Math.ceil((start - moved) / candleWidth)) : (Math.floor((start - moved) / candleWidth))
       setChartDragStartPoint(moved)
