@@ -17,7 +17,7 @@ interface UpbitChartData {
 type GetSnapCoinChartDataProps = {
   chartSort: string,
   coin: string,
-  periodTo?: number
+  periodTo?: string
 }
 
 type CoinChartData = {

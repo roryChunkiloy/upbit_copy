@@ -190,28 +190,101 @@ const Selector = styled.input`
   margin-right : 5px;
 `
 
+const ChartActionBox = styled.div`
+  
+`
+
 
 const CoinInformationBox = ({
     currentCoin,
     currentCoinInfo
 }: coinInfomationType) => {
     const imgUrl = `https://static.upbit.com/logos/${currentCoin}.png`
-    const [chartSort, setChartSort] = useState('days')
+    const [chartSort, setChartSort] = useState('minutes/60')
+    const [chartDataFrom, setChartDataFrom] = useState(0)
+    const [charDataCount, setChartDataCount] = useState(200)
     const [candleData, setCandleData] = useState<CoinChartData[]>([])
+    const [chartMouseDown, setChartMouseDown] = useState(false)
+    const [chartDragStartPoint, setChartDragStartPoint] = useState(0)
+    const [chartDragEndPoint, setChartDragEndPoint] = useState(0)
+    const [chartDragTrot, setChartDragTrot] = useState(true)
+    const [upbitGetApiTrot, setUpbitGetApiTrot] = useState(true)
 
     const chartSortSelect = (e: React.MouseEvent) => {
       setChartSort((e.currentTarget as HTMLInputElement).value)
     }
 
+    const MouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+      setChartMouseDown(true)
+      setChartDragStartPoint(e.clientX)
+    }
+
+    const MouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+      setChartMouseDown(false)
+    }
+
+    const MouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (!chartMouseDown) return
+      if (chartDragTrot) {
+        setChartDragEndPoint(e.clientX)
+        setChartDragTrot(false)
+        setTimeout(() => {
+          setChartDragTrot(true)
+        }, 50)
+      }
+    }
+
+    useEffect(() => {
+      const containerWidth = 914
+      const start = chartDragStartPoint
+      const moved = chartDragEndPoint
+      const candleWidth = containerWidth / candleData.length
+
+      const movingCount = (start - moved) > 0 ? (Math.ceil((start - moved) / candleWidth)) : (Math.floor((start - moved) / candleWidth))
+      setChartDragStartPoint(moved)
+      if (chartDataFrom - movingCount < 0) return
+      setChartDataFrom(c => c - movingCount)
+    }, [chartDragEndPoint])
+
+
     useEffect(() => {
       const data = getSnapCoinChartData({
         chartSort: chartSort,
-        coin: currentCoin
+        coin: currentCoin,
       })
 
       data.then(res => setCandleData(res))
 
+      setChartDataFrom(0)
+
     }, [currentCoin, chartSort])
+
+    useEffect(() => {
+      if (!candleData.length) return
+      const originalData = candleData
+      const length = originalData.length
+      const lastData = candleData[candleData.length-1].candle_date_time_kst
+
+      if (charDataCount + chartDataFrom * 1.5 > length) {
+        if (lastData === '') return
+        if (!upbitGetApiTrot) return
+        setUpbitGetApiTrot(false)
+        let date = new Date(lastData)
+        const LastDataTime = date.toISOString()
+        const data = getSnapCoinChartData({
+          chartSort: chartSort,
+          coin: currentCoin,
+          periodTo: LastDataTime
+        })
+        data.then(res => {
+          let candleDataCopy = candleData.slice()
+          candleDataCopy.push(...res)
+          setCandleData(candleDataCopy)
+          setUpbitGetApiTrot(true)
+        })
+      }
+    }, [chartDataFrom, charDataCount])
+
 
     return (
         <Root>
@@ -262,7 +335,9 @@ const CoinInformationBox = ({
                   <label htmlFor="week">week</label>
                 </SortOptionContainer>
               </SortSelectBox>
-              <CandleChart data={candleData}></CandleChart>
+              <div onMouseDown={MouseDown} onMouseLeave={MouseUp} onMouseUp={MouseUp} onMouseMove={MouseMove}>
+                <CandleChart data={candleData.slice(chartDataFrom, chartDataFrom + charDataCount).reverse()}></CandleChart>
+              </div>
             </ChartBox>
         </Root>
     )

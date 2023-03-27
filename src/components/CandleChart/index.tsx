@@ -67,7 +67,7 @@ const VolumePrice = styled.div`
 `
 
 const Candle : StyledComponent<'rect', {color : string, key : number, height : number, width : number, y: number, x : number }> = styled.rect`
-  fill : ${props => props.color === 'up' ? '#c84a31' : '#1261c4'};
+  fill : ${props => props.color === 'up' ? colors.up_color : colors.down_color};
 `
 
 const Line : StyledComponent<'rect', {color : string, key : number, height : number, width : number, y: number, x : number }> = styled.rect`
@@ -75,7 +75,7 @@ const Line : StyledComponent<'rect', {color : string, key : number, height : num
   stroke: black;
 `
 const Volume : StyledComponent<'rect', {color : string, key : number, height : number, width : number, y: number, x : number }> = styled.rect`
-  fill : ${props => props.color === 'up' ? '#c84a31' : '#1261c4'};
+  fill : ${props => props.color === 'up' ? colors.up_color : colors.down_color};
 `
 
 const CandleChart = ({
@@ -92,14 +92,11 @@ const CandleChart = ({
     const min = d3.min(data.map(item => item.low_price))  || 0
     const vMax = d3.max(data.map(item => item.candle_acc_trade_volume)) || 0
 
-    function candlePixelInverter (value : number, max: number, min: number) { // d3를 쓸거면 픽셀값을 변환해야함
+    function candlePixelInverter (value : number, max: number, min: number) {
       const pixel = 
       Math.abs(
         ((value - min) / (max - min)) * 300 - 300
       )
-      // Math.abs(
-      //   ((value - min) / (max - min)) * height
-      // )
       return pixel
     }
     function volumePixelInverter (value : number, max: number, min: number) {
