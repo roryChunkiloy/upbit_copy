@@ -164,7 +164,7 @@ const ExtraItem = styled.div`
   justify-content: space-between;
 `
 const ChartBox = styled.div`
-    height: 500px;
+    height: 480px;
     background-color: #fff;
 `
 
