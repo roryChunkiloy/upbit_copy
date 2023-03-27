@@ -33,6 +33,51 @@ const CoinList: {
         en_name: 'Ripple',
         ticker: 'XRP',
     },
+    {
+        kr_name: '스택스',
+        en_name: 'Stax',
+        ticker: 'STX',
+    },
+    {
+        kr_name: '네오',
+        en_name: 'NEO',
+        ticker: 'NEO',
+    },
+    {
+        kr_name: '도지코인',
+        en_name: 'DodgeCoin',
+        ticker: 'DOGE',
+    },
+    {
+        kr_name: '오미세고',
+        en_name: 'Omisego',
+        ticker: 'OMG',
+    },
+    {
+        kr_name: '샌드박스',
+        en_name: 'Sandbox',
+        ticker: 'SAND',
+    },
+    {
+        kr_name: '가스',
+        en_name: 'Gas',
+        ticker: 'GAS',
+    },
+    {
+        kr_name: '트론',
+        en_name: 'Tron',
+        ticker: 'TRX',
+    },
+    {
+        kr_name: '어거',
+        en_name: 'Augur',
+        ticker: 'Rep',
+    },
+    {
+        kr_name: '코스모스',
+        en_name: 'Cosmos',
+        ticker: 'ATOM',
+    },
     // 형식에 맞게 여기 추가하면 코인 리스트에 추가됩니다.
 ]
 
