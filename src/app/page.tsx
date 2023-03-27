@@ -1,6 +1,11 @@
+import HomePage from "@/pages/Home";
 
 export default function Home() {
   return (
-    <div>안녕하세요~</div>
+    <>
+
+      <HomePage/>
+    
+    </>
   )
 }

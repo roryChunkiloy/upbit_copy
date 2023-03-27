@@ -3,6 +3,7 @@ import Frame from "../pages/Frame"
 import './globals.css'
 import styled from "styled-components"
 import colors from "@/styles/colors"
+import Head from "next/head"
 
 export const metadata = {
   title: '업비트 - 가장 신뢰받는 디지털 자산 거래소',

@@ -107,7 +107,7 @@ const FrameBody = ({
                     {FrameNavigationItems.map((item, idx) => {
                         return(
                             <NavigationItem key={idx}>
-                                <FrameLinkButton to={item.to} content={item.content} isNew={item.isNew}/>
+                                <FrameLinkButton className={`LinkedButton+${idx}`} to={item.to} content={item.content} isNew={item.isNew}/>
                             </NavigationItem>
                         )
                     })}

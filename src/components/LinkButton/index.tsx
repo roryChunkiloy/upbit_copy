@@ -5,9 +5,9 @@ type LinkButtonProps = {
     to: string,
     content: string,
     isNew: boolean
+    className: string
 }
 const Root = styled(Link)`
-    display: flex;
 `
 
 const Badge = styled.i`
@@ -22,10 +22,12 @@ const Badge = styled.i`
 const LinkButton = ({
     to,
     content,
-    isNew
+    isNew,
+    className,
 }: LinkButtonProps) => {
     return (
-        <Root href={to}>{content}
+        <Root href={to} className={className}>
+            {content}
             {isNew && 
                 <Badge/>
             }

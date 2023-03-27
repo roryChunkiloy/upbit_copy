@@ -9,7 +9,12 @@ const colors = {
     table_head_font_color: '#666',
     table_head_bg_color: '#f9fafc',
     table_body_font_color: '#333',
-    table_body_hover_color: '#f4f5f8'
+    table_body_hover_color: '#f4f5f8',
+    home_title_font: '#333333',
+    home_subtitle_font: '#666666',
+    home_link_button: '#0062df',
+    home_rising_number: '#093687',
+    home_risign_text: '#7588aa',
 }
 
 export default colors
