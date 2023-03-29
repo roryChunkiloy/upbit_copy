@@ -1,5 +1,5 @@
 import StyledComponentsRegistry from "@/lib/registry"
-import Frame from "../pagesComponents/Frame"
+import Frame from "../routes/Frame"
 import './globals.css'
 
 export const metadata = {
