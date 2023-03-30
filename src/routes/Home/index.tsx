@@ -3,7 +3,8 @@
 import colors from "@/styles/colors"
 import styled from "styled-components"
 import LinkButton from "@/components/LinkButton"
-import RisingNumberBox from "@/components/RisingNumber"
+import BaseRisingNumberText from "@/components/RisingNumberText"
+import { it } from "node:test"
 
 
 const Root = styled.section`
@@ -42,7 +43,7 @@ const SubTitle =styled.span`
     font-weight: 400;
 `
 
-const MarketInfoBox = styled.div`
+const MarketInformationBox = styled.div`
     width: 340px;
     height: 75px;
     margin-top: 50px;
@@ -50,13 +51,13 @@ const MarketInfoBox = styled.div`
     justify-content: space-between;
 
 `
-const MarketInfoItem = styled.div`
+const MarketInformationItem = styled.div`
     width: 170px;
     width: 100%;
 
 `
 
-const RisingNumber = styled(RisingNumberBox)`
+const RisingNumberText = styled(BaseRisingNumberText)`
     font-size: 48px;
     color: ${colors.home_rising_number};
     display: flex;
@@ -65,7 +66,7 @@ const RisingNumber = styled(RisingNumberBox)`
     font-weight: 700;
 
 `
-const RisingNumberText = styled.div`
+const RisingNumberLable = styled.div`
     font-size: 16px;
     display: flex;
     align-items: center;
@@ -87,22 +88,41 @@ const Link = styled(LinkButton)`
     justify-content: center;
 `
 
+const marketInformations: MarketInformationsType[] = [
+    {
+        contents: 'Digital Assets',
+        targetNumber: 191,
+        duration: 1000,
+    },
+    {
+        contents: 'Markets',
+        targetNumber: 301,
+        duration: 1000,
+    },
+]
+
+type MarketInformationsType = {
+    contents: string,
+    targetNumber: number,
+    duration: number
+}
+
 const HomePage = () => {
     return (
         <Root>
             <TitleBox>
                 <Title>가장 신뢰받는 글로벌 표준 디지털 자산 거래소</Title>
                 <SubTitle>안전하고 투명한 시스템으로 빠르고 편리한 거래 환경을 제공합니다.</SubTitle>
-                <MarketInfoBox>
-                    <MarketInfoItem>
-                        <RisingNumber className={'assetRiser'} targetNumber={191} duration={1000}/>
-                        <RisingNumberText>Digital Assets</RisingNumberText>
-                    </MarketInfoItem>
-                    <MarketInfoItem>
-                        <RisingNumber className={'marketRiser'} targetNumber={301} duration={1000}/>
-                        <RisingNumberText>Markets</RisingNumberText>
-                    </MarketInfoItem>
-                </MarketInfoBox>
+                <MarketInformationBox>
+                    {marketInformations.map((item, idx) => {
+                        return (
+                            <MarketInformationItem key={idx}>
+                                <RisingNumberText className={item.contents} targetNumber={item.targetNumber} duration={item.duration}/>
+                                <RisingNumberLable>{item.contents}</RisingNumberLable>
+                            </MarketInformationItem>
+                        )
+                    })}
+                </MarketInformationBox>
                 <Link className={'homeLinkedButton'} isNew={false} to={'/exchange'} content={'거래소 바로가기'}/>
             </TitleBox>
         </Root>

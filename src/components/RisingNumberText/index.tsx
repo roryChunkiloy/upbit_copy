@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
-type RisingNumberBoxProps = {
+type RisingNumberTextProps = {
     targetNumber: number
     duration: number
     className: string
@@ -12,11 +12,11 @@ const Root = styled.div`
 
 `
 
-const RisingNumberBox = ({
+const RisingNumberText = ({
     targetNumber,
     duration,
     className
-}: RisingNumberBoxProps) => {
+}: RisingNumberTextProps) => {
     const [number, setNumber] = useState(0)
 
     useEffect(() => {
@@ -39,4 +39,4 @@ const RisingNumberBox = ({
     )
 }
 
-export default RisingNumberBox
+export default RisingNumberText
