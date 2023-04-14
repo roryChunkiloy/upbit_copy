@@ -5,8 +5,6 @@ import CoinListTable, { CoinInfo } from "./components/CoinListTable";
 import replaceQueryString from "@/utils/replaceQueryString";
 import CoinInformationBox from "./components/CoinInformationBox";
 import styled from "styled-components";
-import { it } from "node:test";
-
 
 const CoinList: {
     kr_name: string,
