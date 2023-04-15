@@ -323,7 +323,7 @@ const CoinInformationBox = ({
                 </SortOptionContainer>
               </SortSelectBox>
               <div onMouseDown={MouseDown} onMouseLeave={MouseUp} onMouseUp={MouseUp} onMouseMove={MouseMove}>
-                <CandleChart data={candleData.slice(chartDataFrom, chartDataFrom + charDataCount).reverse()}></CandleChart>
+                { candleData.length > 0 && <CandleChart data={candleData.slice(chartDataFrom, chartDataFrom + charDataCount).reverse()}></CandleChart>}
               </div>
             </ChartBox>
         </Root>
