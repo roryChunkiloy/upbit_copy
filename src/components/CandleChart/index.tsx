@@ -82,7 +82,7 @@ const CandleChart = ({
     yVolumeAxisGroup.selectAll("path").attr("stroke", "#d4d6dc")
     yVolumeAxisGroup.selectAll("line").attr("stroke", "#d4d6dc")
     yAxisGroup.selectAll("path").attr("stroke", "#d4d6dc")
-    yAxisGroup.selectAll("lines").attr("stroke", "#d4d6dc")
+    yAxisGroup.selectAll("line").attr("stroke", "#d4d6dc")
 
     volumeGroup
     .selectAll('.volume')
