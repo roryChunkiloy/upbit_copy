@@ -69,7 +69,7 @@ const CoinList: {
     {
         kr_name: '어거',
         en_name: 'Augur',
-        ticker: 'Rep',
+        ticker: 'REP',
     },
     {
         kr_name: '코스모스',
