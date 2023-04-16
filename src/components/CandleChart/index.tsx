@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import colors from '@/styles/colors';
+import styled from 'styled-components';
 
 interface CandleData {
   time : number,
@@ -17,6 +18,14 @@ interface CandleData {
 type CandleChartProps = {
   data: CandleData[]
 }
+
+const ChartSVG = styled.svg`
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  cursor: pointer;
+`
 
 const CandleChart = ({
   data
@@ -147,8 +156,8 @@ const CandleChart = ({
   }, [data]);
 
   return (
-    <svg ref={chartRef} width={totalWidth + margin.left + margin.right} height={candelHeight + voulmeHeight}>
-    </svg>
+    <ChartSVG ref={chartRef} width={totalWidth + margin.left + margin.right} height={candelHeight + voulmeHeight}>
+    </ChartSVG>
   );
 };
 
